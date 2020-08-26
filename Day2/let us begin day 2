@@ -1,0 +1,27 @@
+///////////////DAY-2 GOALS/////////////////////////////
+1) Introduction to ABI 
+2) Memory allocation for doublewords – “little-endian” 
+3) Representation of load, add and store instructions with example 
+4) Concluding ‘need’ for 32-registers and their respective ABI names
+/////////////////////////////////////////////////////////
+
+* ABI - Application Binary inteface --> is actually a system call inteface                  (geeksforgeeks.org/introduction-of-system-call/)
+In our case, This is just like a habdshaker between user and memory registers
+RISC-V registers --- 
+-------------///// 32 Registers each with a width = [0, XLEN-1] 
+----------------------where XLEN cam be 32 for rv32 bit instruction set and 64 for rv64 instruction set
+RISC-V system belongs to little-endian MEMORY ADDRESSING SYSTEM                     (https://www.geeksforgeeks.org/little-and-big-endian-mystery/) 
+* BASE INTEGER INSTRUCTIONS
+-------- 1] lOAD DOUBLEWORD ------ ld <destination register> , <offset immidiate>(<source register)
+-----------------------------------ld X8, 16(X23)
+---------2] ADD REGISTERS----------add <destination register>, <source register 1>, <source register 2>
+-----------------------------------add X8, X24, X8
+---------3] STORE BACK TO MEMORY---sd <destination register> , <offset immidiate>(<source register>)
+-----------------------------------sd X8, 8(X23)
+
+*ANY CPU USING RISCV ARCHITECTURE HAS TO USE 47 BASE INTEGER INSTRUCTTIONS APART FROM ld, add and sd
+
+*TYPES OF THESE 47 INSTRUCTUIONS 
+-------------1] I-TYPE -----that operates on register and immidiate data
+-------------2] R-TYPE -----  THAT OPERATES ONLY ON REGISTERS
+-------------3] S-TYPE ----- that are used for storing, operates on immidiate data and source registers
