@@ -331,21 +331,26 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGY1#
    |calc
       @0         
         $reset = *reset;
+        
        ?$valid 
+        
       @1   
         // YOUR CODE HERE
         //Calculator              
          // Change allignment of the output 
+         $valid_or_reset = $valid || $reset;
+         $val2[31:0] = $rand2[31:0];
          $val1[31:0] = >>2$out[31:0];
          //Set ALU operation
          $sum[31:0]  = $val1[31:0] + $val2[31:0];         
          $diff[31:0] = $val1[31:0] - $val2[31:0];        
          $prod[31:0] = $val1[31:0] * $val2[31:0];         
          $quot[31:0] = $val1[31:0] / $val2[31:0];
+         
          //counter
-         $valid_or_reset = $valid || $reset;
-         //$valid = $reset ? 1 : (>>1$valid + 1);
-         $ctrl = $reset || $valid_or_reset;
+         
+         $valid = $reset ? 1 : (>>1$valid + 1);
+         //$ctrl = $reset || $valid_or_reset;
       @2   
          
          //Mux Logic timed to stage 2
@@ -356,7 +361,7 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGY1#
                       $sum[31:0] : $ctrl == 2'b01 ?
                       $diff[31:0] : $ctrl == 2'b10 ? 
                       $prod[31:0] : $ctrl == 2'b11 ?
-                      $quot[31:0] : 32'b0;
+                      $quot[31:0] : $valid_or_reset;
        
         
                   
