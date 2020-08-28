@@ -1,9 +1,16 @@
 \m4_TLV_version 1d: tl-x.org
 \SV
 //Calculator labs solutions here
- // Lab: Combinational Calculator 
+
+ // Lab : Counter ///////////////////////////
+ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGO1
+ ----------------------------------------------------------------
+  $cnt[3:0] = $reset ? 0 : (>>1$cnt + 1);
+  -----------------------------------------------------------------------
+ // Lab: Combinational Calculator ////////////////////////////////
+ --------------------------------------------------------------------------
  https://myth2.makerchip.com/sandbox/0NkfNhjqj/0j2hn6p#
- 
+ ----------------------------------------------------------------------
  \m4_TLV_version 1d: tl-x.org
 \SV
    // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
