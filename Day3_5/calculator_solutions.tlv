@@ -2,7 +2,7 @@
 \SV
 //Calculator labs solutions here
  // Lab: Combinational Calculator 
- https://myth2.makerchip.com/sandbox?code_url=https:%2F%2Fraw.githubusercontent.com%2Fstevehoover%2FRISC-V_MYTH_Workshop%2Fmaster%2Fcalculator_shell.tlv
+ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0j2hn6p#
  
  \m4_TLV_version 1d: tl-x.org
 \SV
