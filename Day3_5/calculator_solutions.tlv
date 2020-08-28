@@ -228,9 +228,9 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0mwhj0l
    |calc
       @0   
         // YOUR CODE HERE
-        $err1 = $bad_input || $ileegal_op- ;
+        $err1 = $bad_input || $illegal_op ;
       @3 
-        $err2 = $over_flow- || $err1 ;
+        $err2 = $over_flow || $err1 ;
       @6 
         $err3 = $div_by_zero || $err2 ;
          
