@@ -219,6 +219,9 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/0j2hn9B#
                               0 : $rf_wr_data[31:0];
          $rf_rd_data2[31:0] = (!$reset && $rf_rd_en2 && !$rf_wr_en && $rd_valid) ?
                               0 : $rf_wr_data[31:0];
+ // Part-2 Register File Read
+         $src1_value[31:0] = $rf_rd_data1[31:0] ;
+         $src2_value[31:0] = $rf_rd_data2[31:0] ;
 /////////////// LAB- REGISTER FILE READ //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 https://myth2.makerchip.com/sandbox/0rkfAh4pA/0qjh8lQ
