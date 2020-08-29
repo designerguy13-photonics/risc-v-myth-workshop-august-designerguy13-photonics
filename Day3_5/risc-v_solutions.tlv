@@ -12,7 +12,9 @@ https://myth2.makerchip.com/sandbox/0rkfAh4pA/0qjh8lQ#
          $reset = *reset;
          
          // LAB: Next PC
-         $inc_pc[31:0] = >>1$reset ? 0 : $pc[31:0] + 1;
+        // $inc_pc[31:0] = >>1$reset ? 0 : $pc[31:0] + 1;  /*---This one is wrong code-*/
+         $pc[31:0] = 32'b0;
+         $inc_pc[31:0] = >>1$reset ? 0 : $pc[31:0]+4;
 
 --------------------------------------------------------------------------
 ////////////////log///////////////////////////////////
