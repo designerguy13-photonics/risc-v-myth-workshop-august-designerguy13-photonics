@@ -181,6 +181,34 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/0Y6hL8M#
           
 
 -----------------------------------------------------------
+///////////////////////////////////////////////////////////////
+////////////////Lab: RISC-V Instruction Field Decode/////////////
+///////////////////////////////////////////////////////////////
+https://myth2.makerchip.com/sandbox/04xfJhBGq/08qh6rK#
+------------------------------------------------------------------
+  //  RISC-V INSTRUCTION FIELD DECODE
+      @2    
+         $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
+         ?$rs2_valid
+            $rs2[4:0] = $instr[24:20];
+         $rs1_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
+         ?$rs1_valid
+            $rs1[4:0] = $instr[19:15];
+         $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr ;
+         ?$funct3_valid
+            $funct3[2:0] = $instr[14:12];
+         $funct7_valid = $is_r_instr ;
+         ?$funct7_valid
+            $funct7[6:0] = $instr[31:25];
+         $rd_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr;
+         ?$rd_valid
+            $rd[4:0] = $instr[11:7];
+         $opcode_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr || $is_s_instr || $is_b_instr;
+         ?$opcode_valid
+            $opcode[6:0] = $instr[6:0];
+         
+-------------------------------------------------------
+
 /////////////// LAB- REGISTER FILE READ //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 https://myth2.makerchip.com/sandbox/0rkfAh4pA/0qjh8lQ
