@@ -388,202 +388,72 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGY1#
 https://myth2.makerchip.com/sandbox/0rkfAh4pA/0Vmhx91
 -----------------------------------------------------------------------------
 
-INFORM(0) (PROD_INFO):
-	SandPiper(TM) 1.9-2018/02/11-beta from Redwood EDA
-	(DEV) Run as: "java -jar /src/sandpiper.jar --ide --licenseFile /src/full_license_key.txt --iArgs --distroRef=NO_DISTRO --debugSigs --viz --dhtml --stats --compiler verilator -i top.m4 -o top.sv
-	For help, including product info, run with -h.
+\m4_TLV_version 1d: tl-x.org
+\SV
+   // This code can be found in: https://github.com/stevehoover/RISC-V_MYTH_Workshop
+   
+  
+\SV
+   m4_makerchip_module   // (Expanded in Nav-TLV pane.)
 
-INFORM(0) (LICENSE):
-	Licensed to "Redwood EDA" as: Full Edition.
+\TLV
+   |calc
+      @0         
+         $reset = *reset;
+      ?$valid_or_reset
+         @1
+           
+           // YOUR CODE HERE
+           //Calculator              
+           // Change allignment of the output 
+           $valid_or_reset = $valid || $reset;
+           $val2[31:0] = $rand2[31:0];
+           $val1[31:0] = >>2$out[31:0];
+           //Set ALU operation
+           $sum[31:0]  = $val1[31:0] + $val2[31:0];         
+           $diff[31:0] = $val1[31:0] - $val2[31:0];        
+           $prod[31:0] = $val1[31:0] * $val2[31:0];         
+           $quot[31:0] = $val1[31:0] / $val2[31:0];
+           //counter
+           $valid = $reset ? 1 : (>>1$valid + 1);
+         
+         @2 
+            $mem[31:0] = $reset ? 0:
+                         $ctrl[6] ? 
+                         (>>1$out[31:0])
+                         : 
+                         (>>1$mem[31:0]);
+         
+            $out[31:0] = $valid_or_reset ? 32'b0 : 
+                         $ctrl[0] ? $sum[31:0] :
+                         $ctrl[1] ? $diff[31:0] :
+                         $ctrl[2] ? $prod[31:0] :
+                         $ctrl[3] ? $quot[31:0] :
+                         ($ctrl[4] && $recall) 
+                         ? (>>1$mem[31:0]) : 32'b0;
+            
+                             
+             
+        
+                  
+      // Macro instantiations for calculator visualization(disabled by default).
+      // Uncomment to enable visualisation, and also,
+      // NOTE: If visualization is enabled, $op must be defined to the proper width using the expression below.
+      //       (Any signals other than $rand1, $rand2 that are not explicitly assigned will result in strange errors.)
+      //       You can, however, safely use these specific random signals as described in the videos:
+      //  o $rand1[3:0]
+      //  o $rand2[3:0]
+      //  o $op[x:0]
+      
+   //m4+cal_viz(@3) // Arg: Pipeline stage represented by viz, should be atleast equal to last stage of CALCULATOR logic.
 
-INFORM(0) (FILES):
-	From directory: /projects/xkf5jG
-	Reading "top.m4" to produce:
-		Translated HDL File: "top.sv"
-		Generated HDL File: "top_gen.sv"
-		HTML TLX File: "top.html"
-		Simulation Visualization File: "top_viz.json"
-		Statistics Directory: "top_stats"
+   
+   // Assert these to end simulation (before Makerchip cycle limit).
+   *passed = *cyc_cnt > 40;
+   *failed = 1'b0;
+   
 
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 19 (char 12)
-	Preprocessed as 'top.m4':19(ch12):
-	+-----------v-----------------------------
-	|           
-	|           // YOUR CODE HERE
-	|           //Calculator              
-	|           // Change allignment of the output 
-	>           $valid_or_reset = $valid || $reset;
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
+\SV
+   endmodule
 
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 20 (char 12)
-	Preprocessed as 'top.m4':20(ch12):
-	+-----------v-----------------------------
-	>           $val2[31:0] = $rand2[31:0];
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 21 (char 12)
-	Preprocessed as 'top.m4':21(ch12):
-	+-----------v-----------------------------
-	>           $val1[31:0] = >>2$out[31:0];
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 23 (char 12)
-	Preprocessed as 'top.m4':23(ch12):
-	+-----------v-----------------------------
-	|           //Set ALU operation
-	>           $sum[31:0]  = $val1[31:0] + $val2[31:0];         
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 24 (char 12)
-	Preprocessed as 'top.m4':24(ch12):
-	+-----------v-----------------------------
-	>           $diff[31:0] = $val1[31:0] - $val2[31:0];        
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 25 (char 12)
-	Preprocessed as 'top.m4':25(ch12):
-	+-----------v-----------------------------
-	>           $prod[31:0] = $val1[31:0] * $val2[31:0];         
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 26 (char 12)
-	Preprocessed as 'top.m4':26(ch12):
-	+-----------v-----------------------------
-	>           $quot[31:0] = $val1[31:0] / $val2[31:0];
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-SYNTAX_ERROR(3) (INDENT): File 'top.tlv' Line 28 (char 12)
-	Preprocessed as 'top.m4':28(ch12):
-	+-----------v-----------------------------
-	|           //counter
-	>           $valid = $reset ? 1 : (>>1$valid + 1);
-	+-----------^-----------------------------
-	Indentation is 11 spaces, which is not a multiple of 3.  Interpretting as 12 spaces.
-
-LOGIC_ERROR(5) (CONDITION-CONTEXT): File 'top.tlv' Line 19 (char 12)
-	Preprocessed as 'top.m4':19(ch12):
-	+-----------v-----------------------------
-	|           
-	|           // YOUR CODE HERE
-	|           //Calculator              
-	|           // Change allignment of the output 
-	>           $valid_or_reset = $valid || $reset;
-	+-----------^-----------------------------
-	Currently, signals used as 'when' conditions may not themselves be under a 'when' condition within their behavioral scope.
-
-LOGIC_ERROR(5) (UNASSIGNED-SIG): File 'top.tlv' Line 31 (char 26)
-	Preprocessed as 'top.m4':31(ch26):
-	+-------------------------vvvvvvvvvv------
-	>            $mem[31:0] = $ctrl[2:0] ? 0 : (>>1$out[31:0]);
-	+-------------------------^^^^^^^^^^------
-	Signal |calc$ctrl is used but never assigned.
-
-LOGIC_ERROR(5) (UNASSIGNED-SIG): File 'top.tlv' Line 20 (char 26)
-	Preprocessed as 'top.m4':20(ch26):
-	+-------------------------vvvvvvvvvvvv----
-	>           $val2[31:0] = $rand2[31:0];
-	+-------------------------^^^^^^^^^^^^----
-	Signal |calc$rand2 is used but never assigned.
-
-INFORM(0) (STATS):
-	SandPiper generated 73% of your HDL code.
-	This includes: 28 signal declarations, 12 flops/latches, and 2 conditional clock signals.
-	View "top_stats" for more details.
-
-SandPiper returning status 5.
-verilator --debug --debugi 0 --gdbbt --no-dump-tree -V
-No stack.
-Starting Verilator 4.027 devel rev v4.026-36-g22088c9
-Starting Verilator 4.027 devel rev v4.026-36-g22088c9
-Verilator 4.027 devel rev v4.026-36-g22088c9
-
-Copyright 2003-2020 by Wilson Snyder.  Verilator is free software; you can
-redistribute it and/or modify the Verilator internals under the terms of
-either the GNU Lesser General Public License Version 3 or the Perl Artistic
-License Version 2.0.
-
-See https://verilator.org for documentation
-
-Summary of configuration:
-  Compiled in defaults if not in environment:
-    SYSTEMC            = 
-    SYSTEMC_ARCH       = 
-    SYSTEMC_INCLUDE    = 
-    SYSTEMC_LIBDIR     = 
-    VERILATOR_ROOT     = /usr/local/share/verilator
-
-Environment:
-    PERL               = 
-    SYSTEMC            = 
-    SYSTEMC_ARCH       = 
-    SYSTEMC_INCLUDE    = 
-    SYSTEMC_LIBDIR     = 
-    VERILATOR_ROOT     = 
-    VERILATOR_BIN      = 
-[Inferior 1 (process 28116) exited normally]
-No stack.
-verilator --debug --debugi 0 --gdbbt --no-dump-tree --cc +librescan +libext+.sv --top-module makerchip -y . -y /src/verilog -y /src/sandhost -y /src/proj_default -y /src/lib +incdir+. +incdir+./sv_url_inc +incdir+/src/verilog +incdir+/src/sandhost +incdir+/src/proj_default +incdir+/src/lib makerchip.sv --assert --trace
-No stack.
-Starting Verilator 4.027 devel rev v4.026-36-g22088c9
-Starting Verilator 4.027 devel rev v4.026-36-g22088c9
-%Error: top.tlv:46: syntax error, unexpected ')'
-                            )
-                            ^
-        /src/makerchip.sv:29: ... note: In file included from makerchip.sv
-%Error: Exiting due to 1 error(s)
-[Inferior 1 (process 28131) exited with code 01]
-No stack.
-%Error: export VERILATOR_ROOT=
-%Error: gdb /usr/local/bin/verilator_bin_dbg --batch --quiet --return-child-result -ex "run --debug --debugi 0 --gdbbt --no-dump-tree --cc \+librescan \+libext\+.sv --top-module makerchip -y . -y /src/verilog -y /src/sandhost -y /src/proj_default -y /src/lib \+incdir\+. \+incdir\+./sv_url_inc \+incdir\+/src/verilog \+incdir\+/src/sandhost \+incdir\+/src/proj_default \+incdir\+/src/lib makerchip.sv --assert --trace" -ex 'set width 0' -ex 'bt' -ex 'quit'
-%Error: Command Failed gdb /usr/local/bin/verilator_bin_dbg --batch --quiet --return-child-result -ex "run --debug --debugi 0 --gdbbt --no-dump-tree --cc \+librescan \+libext\+.sv --top-module makerchip -y . -y /src/verilog -y /src/sandhost -y /src/proj_default -y /src/lib \+incdir\+. \+incdir\+./sv_url_inc \+incdir\+/src/verilog \+incdir\+/src/sandhost \+incdir\+/src/proj_default \+incdir\+/src/lib makerchip.sv --assert --trace" -ex 'set width 0' -ex 'bt' -ex 'quit'
-/src/Makefile:50: recipe for target 'prep' failed
-make: *** [prep] Error 1
-xkf5jG
-/top
-|calc
-@2
-@1
-@3
-@0
-$ctrl=
-$diff=
-$g0_valid_or_reset=
-$mem=
-$out=
-$prod=
-$quot=
-$rand2=
-$reset=
-$sum=
-$val1=
-$val2=
-$valid=
-$valid_
-or_
-reset=
-*cyc_cnt
-*failed
-*passed
-*reset
-----------------------------------------------------------------------
-///////////////////error/////////////////////////////////
-------------------------------------------------------------------------
-stuck with a syntax error 
-Starting Verilator 4.027 devel rev v4.026-36-g22088c9
-%Error: top.tlv:46: syntax error, unexpected ')'
-                            )
-                            ^
-        /src/makerchip.sv:29: ... note: In file included from makerchip.sv
-%Error: Exiting due to 1 error(s)
-[Inferior 1 (process 28131) exited with code 01]
-No stack.
--------------------------------------------------------------------
-
-
+--------------------------------------------------------------------
