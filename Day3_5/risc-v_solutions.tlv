@@ -210,6 +210,25 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/08qh6rK#
 -------------------------------------------------------
 -----------------------------------------------------------
 ///////////////////////////////////////////////////////////////
+///////////////LAB : ALU and Register File Write////////////
+///////////////////////////////////////////////////////////////
+https://myth2.makerchip.com/sandbox/04xfJhBGq/0k5hONJ#
+-------------------------------------------------------
+    
+      // LAB : ALU
+         $result[31:0] = $is_addi ? $src1_value + $imm :
+                         $is_add ? $src1_value + $imm :
+                         32'bx;
+      // Lab: Register File Write
+         $rf_wr_data1[31:0] = (!$reset && !$rf_rd_en1 && $rf_rd_en2 && $rf_wr_en && $rd_valid ) ?
+                               >>1$rf_rd_data1[31:0] : $rf_rd_data1[31:0]
+                               ;
+         $rf_wr_data1[31:0] = (!$reset && $rf_rd_en1 && !$rf_rd_en2 && $rf_wr_en && $rd_valid ) ?
+                               >>1$rf_rd_data2[31:0] : $rf_rd_data2[31:0]
+                               ;
+                              
+------------------------------------------------------------
+///////////////////////////////////////////////////////////////
 ////////////////Lab: Register File Read/////////////
 ///////////////////////////////////////////////////////////////
 https://myth2.makerchip.com/sandbox/04xfJhBGq/0j2hn9B#
