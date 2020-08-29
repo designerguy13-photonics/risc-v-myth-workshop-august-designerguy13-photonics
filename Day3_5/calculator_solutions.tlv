@@ -330,38 +330,34 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGY1#
 \TLV
    |calc
       @0         
-        $reset = *reset;
-        
-       ?$valid 
-        
-      @1   
-        // YOUR CODE HERE
-        //Calculator              
-         // Change allignment of the output 
-         $valid_or_reset = $valid || $reset;
-         $val2[31:0] = $rand2[31:0];
-         $val1[31:0] = >>2$out[31:0];
-         //Set ALU operation
-         $sum[31:0]  = $val1[31:0] + $val2[31:0];         
-         $diff[31:0] = $val1[31:0] - $val2[31:0];        
-         $prod[31:0] = $val1[31:0] * $val2[31:0];         
-         $quot[31:0] = $val1[31:0] / $val2[31:0];
+         $reset = *reset;
+      ?$valid_or_reset
+         @1
+           
+           // YOUR CODE HERE
+           //Calculator              
+           // Change allignment of the output 
+           $valid_or_reset = $valid || $reset;
+           $val2[31:0] = $rand2[31:0];
+           $val1[31:0] = >>2$out[31:0];
+           //Set ALU operation
+           $sum[31:0]  = $val1[31:0] + $val2[31:0];         
+           $diff[31:0] = $val1[31:0] - $val2[31:0];        
+           $prod[31:0] = $val1[31:0] * $val2[31:0];         
+           $quot[31:0] = $val1[31:0] / $val2[31:0];
+           //counter
+           $valid = $reset ? 1 : (>>1$valid + 1);
          
-         //counter
+         @2   
          
-         $valid = $reset ? 1 : (>>1$valid + 1);
-         //$ctrl = $reset || $valid_or_reset;
-      @2   
-         
-         //Mux Logic timed to stage 2
-                          
-         //$ctrl = $reset || (!$valid) ;
-         
-         $out[31:0] = $ctrl == 2'b00 ? 
-                      $sum[31:0] : $ctrl == 2'b01 ?
-                      $diff[31:0] : $ctrl == 2'b10 ? 
-                      $prod[31:0] : $ctrl == 2'b11 ?
-                      $quot[31:0] : $valid_or_reset;
+           $out[31:0] = $valid_or_reset ? 32'b0 : 
+                      
+                      ($ctrl[0] ? 
+                      ($ctrl[1] ?
+                      $diff[31:0] : $quot[31:0] )
+                      : ($ctrl[1] ? 
+                      $sum[31:0] : $prod[31:0]))
+                      ;
        
         
                   
@@ -384,6 +380,7 @@ https://myth2.makerchip.com/sandbox/0NkfNhjqj/0wjhGY1#
 
 \SV
    endmodule
+
 ------------------------------------------------------------------------------
 //////////////////////////////////////////////////////////////////
 
