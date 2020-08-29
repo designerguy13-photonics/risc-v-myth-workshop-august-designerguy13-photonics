@@ -130,8 +130,20 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/0X6hX5V#
 /////////////////////////////////////////////////////////////////////////////
 ///////////////LAB - INSTRUCTIONS TYPE DECODE////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-https://myth2.makerchip.com/sandbox/04xfJhBGq/0y8hrnA
+https://myth2.makerchip.com/sandbox/04xfJhBGq/0y8hrnA#
 --------------------------------------------------------(slidenumber = 10)
+
+         //Lab : Instruction Types Decode
+         $is_i_instr = $instr[6:2] ==? 5'b0000x ||
+                       $instr[6:2] ==? 5'b001x0 ||
+                       $instr[6:2] ==? 5'11001;
+         $is_s_instr = $instr[6:2] ==? 5'b0100x ;
+         $is_r_instr = $instr[6:2] ==? 5'b011x0 ||
+                       $instr[6:2] ==? 5'b01011 ;
+         $is_u_instr = $instr[6:2] ==? 5'b0x101;
+         $is_b_instr = $instr[6:2] ==? 5'b11000 ;
+         $is_j_instr = $instr[6:2] ==? 5'b11011 ;
+         $is_r4_instr = $instr[6:2] ==? 5'b1000x  || $instr[6:2] ==? 5'b1001x;
 
 
 
