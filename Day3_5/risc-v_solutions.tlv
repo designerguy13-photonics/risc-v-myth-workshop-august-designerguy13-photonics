@@ -272,7 +272,7 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/0AnhNgp#
 ------------------------------------------------------------
 /////////////// DAY-4_complete_bug-free-code/////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
+https://myth2.makerchip.com/sandbox/0ADf9h9Kr/098hk5M#
 -------------------------------------------------------------------
 \m4_TLV_version 1d: tl-x.org
 \SV
@@ -316,13 +316,20 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
    |cpu
       @0
          $reset = *reset;
+         // LAB: New PC
+         //$pc[31:0] = 32'b0;
+         //$inc_pc[31:0] = 4 + $pc[31:0];
+         $pc[31:0] = >>1$reset  ? 0:
+                     >>1$taken_br ? >>1$br_tgt_pc :
+                     >>1$pc[31:0]+32'd4;
+      
          
-         
-         
-         $pc[31:0] = >>1$reset ? 0 : >>1$taken_br ? >>1$br_tgt_pc : 4+>>1$pc[31:0];
+      @1
          // LAB: Fetch
-         $mem_rd_addr[M4_IMEM_INDEX_CNT+1:2] = $imem_rd_en ? 0 : $pc[M4_IMEM_INDEX_CNT+1:2];
-      @1   
+         $imem_rd_addr[M4_IMEM_INDEX_CNT-1:0] = $pc[M4_IMEM_INDEX_CNT+1:2];
+         
+         $imem_rd_en = !$reset;
+         //read data from memory
          $instr[31:0] = $imem_rd_data[31:0];
          
          //Lab : Instruction Types Decode
@@ -330,14 +337,14 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
                        $instr[6:2] ==? 5'b001x0 ||
                        $instr[6:2] ==? 5'b11001;
          $is_s_instr = $instr[6:2] ==? 5'b0100x ;
-         $is_r_instr = $instr[6:2] ==? 5'b011x0 ||
+         $is_r_instr = $instr[6:2] ==? 5'b01011 ||
+                       $instr[6:2] ==? 5'b011x0 ||
                        $instr[6:2] ==? 5'b01011 ;
          $is_u_instr = $instr[6:2] ==? 5'b0x101;
          $is_b_instr = $instr[6:2] ==? 5'b11000 ;
          $is_j_instr = $instr[6:2] ==? 5'b11011 ;
          $is_r4_instr = $instr[6:2] ==? 5'b1000x  || $instr[6:2] ==? 5'b1001x;
-
-      // Lab : Instruction Immidiate Decode
+         // Lab : Instruction Immidiate Decode
          $imm[31:0] = $is_i_instr ? 
                       { {21{$instr[31]}}, $instr[30:20]} :
                       $is_s_instr ?
@@ -349,8 +356,7 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
                       $is_j_instr ?
                       { {11{$instr[31]}}, $instr[19:12], {2{$instr[20]}}, $instr[30:21], 1'b0} :
                       32'b0;
-      //  RISC-V INSTRUCTION FIELD DECODE
-          
+         //  RISC-V INSTRUCTION FIELD DECODE             
          $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
          ?$rs2_valid
             $rs2[4:0] = $instr[24:20];
@@ -360,49 +366,81 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
          $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr ;
          ?$funct3_valid
             $funct3[2:0] = $instr[14:12];
-         $funct7_valid = $is_r_instr ;
+         $funct7_valid = $is_r_instr || $is_b_instr;
          ?$funct7_valid
             $funct7[6:0] = $instr[31:25];
          $rd_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr;
          ?$rd_valid
             $rd[4:0] = $instr[11:7];
-         $opcode_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr || $is_s_instr || $is_b_instr;
-         ?$opcode_valid
-            $opcode[6:0] = $instr[6:0];
-      // Lab: Instruction Decode  
+            $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
+         ?$rs2_valid
+            $rs2[4:0] = $instr[24:20];
+         $rs1_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
+         ?$rs1_valid
+            $rs1[4:0] = $instr[19:15];
+         $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr ;
+         ?$funct3_valid
+            $funct3[2:0] = $instr[14:12];
+         $funct7_valid = $is_r_instr || $is_b_instr;
+         ?$funct7_valid
+            $funct7[6:0] = $instr[31:25];
+         $rd_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr;
+         ?$rd_valid
+            $rd[4:0] = $instr[11:7];
+         
+         /*$opcode_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr || $is_s_instr || $is_b_instr;
+         ?$opcode_valid*/
+         $opcode[6:0] = $instr[6:0];
+         // Lab: Instruction Decode  
          $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
-         /*
-         //$is_beq = $dec_bits ==? (11’bx0001100011);
-         $is_addi = $dec_bits ==? (11’bx0000010011);
-         $is_add = $dec_bits ==? (11’bx0000110011);
-         `BOGUS_USE($is_addi $is_add)
-         */
-      // Lab: Register File Read
-         $rf_rd_data1[31:0] = (!$reset && $rf_rd_en1 && !$rf_wr_en && $rd_valid) ?
-                              0 : $rf_wr_data[31:0];
-         $rf_rd_data2[31:0] = (!$reset && $rf_rd_en2 && !$rf_wr_en && $rd_valid) ?
-                              0 : $rf_wr_data[31:0];
-      // Part-2 Register File Read
+         
+         $is_beq = $dec_bits ==? 11'bx_000_1100011 ;
+         $is_bne = $dec_bits ==? 11'bx_001_1100011 ;
+         $is_blt = $dec_bits ==? 11'bx_100_1100011 ;
+         $is_bge = $dec_bits ==? 11'bx_101_1100011 ;
+         $is_bltu = $dec_bits ==? 11'bx_110_1100011 ;
+         $is_bgeu = $dec_bits ==? 11'bx_111_1100011 ;
+         $is_addi = $dec_bits ==? 11'bx_000_0010011 ;
+         $is_add = $dec_bits ==? 11'bx_000_0110011 ;
+         `BOGUS_USE($is_beq $is_bne $is_blt $is_bge $is_bltu $is_bgeu $is_addi $is_add)
+         
+         // Lab: Register File Read
+         
+         $rf_wr_en = $rd_valid && $rd != 5'b0;
+         $rf_wr_index[4:0] = $rd[4:0];
+         $rf_rd_index1[4:0] = $rs1[4:0];
+         $rf_rd_index2[4:0] = $rs2[4:0];
+         $rf_rd_en1 = $rs1_valid;
+         $rf_rd_en2 = $rs2_valid;
+         
+         ?$rf_rd_en1
+            $rf_rd_data1[31:0] = /xreg[$rf_rd_index1]>>1$value;
+         ?$rf_rd_en2
+            $rf_rd_data2[31:0] = /xreg[$rf_rd_index2]>>1$value;
+         // Part-2 Register File Read
          $src1_value[31:0] = $rf_rd_data1[31:0] ;
          $src2_value[31:0] = $rf_rd_data2[31:0] ;
-      @2
-        
-      // LAB : ALU
+         // LAB : ALU
          $result[31:0] = $is_addi ? $src1_value + $imm :
-                         $is_add ? $src1_value + $imm :
+                         $is_add ? $src1_value + $src2_value :
                          32'bx;
-      // Lab: Register File Write
-         $rf_wr_data1[31:0] = (!$reset && !$rf_rd_en1 && $rf_rd_en2 && $rf_wr_en && $rd_valid ) ?
-                               >>1$rf_rd_data1[31:0] : $rf_rd_data1[31:0]
-                               ;
-         $rf_wr_data1[31:0] = (!$reset && $rf_rd_en1 && !$rf_rd_en2 && $rf_wr_en && $rd_valid ) ?
-                               >>1$rf_rd_data2[31:0] : $rf_rd_data2[31:0]
-                               ;
-                              
+         // Lab: Register File Write
+         $rf_wr_data[31:0] = $result[31:0];
          
-   
+         // Lab: Branches 
+         $taken_br = ($src1_value == $src2_value) ? $is_beq :
+                         ($src1_value != $src2_value) ? $is_bne :
+                         ($src1_value < $src2_value )^($src1_value[31] != $src2_value[31]) ? $is_blt :
+                         ($src1_value >= $src2_value)^($src1_value[31] != $src2_value[31])  ? $is_bge :
+                         ($src1_value < $src2_value) ? $is_bltu :
+                         ($src1_value >= $src2_value) ? $is_bgeu : 11'b0;
+         $br_tgt_pc = $pc +$imm ;
+         
+         // Lab Testbench
+         
    // Assert these to end simulation (before Makerchip cycle limit).
    *passed = *cyc_cnt > 40;
+   *passed = |cpu/xreg[10]>>5$value == (1+2+3+4+5+6+7+8+9);
    *failed = 1'b0;
    
    // Macro instantiations for:
@@ -419,5 +457,6 @@ https://myth2.makerchip.com/sandbox/0ADf9h9Kr/076hAwZ
                        // @4 would work for all labs
 \SV
    endmodule
+
 ----------------------------------------------------------------------------------------------------------
 
