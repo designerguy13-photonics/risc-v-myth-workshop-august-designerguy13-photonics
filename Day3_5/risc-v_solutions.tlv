@@ -1,7 +1,7 @@
 \m4_TLV_version 1d: tl-x.org
 \SV
 //RISC-V labs solutions here
-/////////////////////////////////////////////////////////////////////////////
+///////////////////DAY-4//////////////////////////////////////////////////////////
 ////////////////LAB- NEXT PC ////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 https://myth2.makerchip.com/sandbox/0rkfAh4pA/0qjh8lQ#
@@ -208,6 +208,20 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/08qh6rK#
             $opcode[6:0] = $instr[6:0];
          
 -------------------------------------------------------
+///////////////////////////////////////////////////////////////
+////////////////Lab: Register File Read/////////////
+///////////////////////////////////////////////////////////////
+https://myth2.makerchip.com/sandbox/04xfJhBGq/0j2hn9B#
+------------------------------------------------------
+// Lab: Register File Read
+         $rf_rd_data1[31:0] = (!$reset && $rf_rd_en1 && !$rf_wr_en && $rd_valid) ?
+                              0 : $rf_wr_data[31:0];
+         $rf_rd_data2[31:0] = (!$reset && $rf_rd_en2 && !$rf_wr_en && $rd_valid) ?
+                              0 : $rf_wr_data[31:0];
+ // Part-2 Register File Read
+         $src1_value[31:0] = $rf_rd_data1[31:0] ;
+         $src2_value[31:0] = $rf_rd_data2[31:0] ;
+------------------------------------------------------------------------
 -----------------------------------------------------------
 ///////////////////////////////////////////////////////////////
 ///////////////LAB : ALU and Register File Write////////////
@@ -234,28 +248,31 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/0k5hONJ#
 https://myth2.makerchip.com/sandbox/04xfJhBGq/0oYhrMD#
 ---------------------------------------------------------------
  // Lab: Branches
-         $taken_branch = ($src1_value == $src2_value) ? $is_beq :
+         $taken_br = ($src1_value == $src2_value) ? $is_beq :
                          ($src1_value != $src2_value) ? $is_bne :
                          ($src1_value < $src2_value )^($src1_value[31] != $src2_value[31]) ? $is_blt :
                          ($src1_value >= $src2_value)^($src1_value[31] != $src2_value[31])  ? $is_bge :
                          ($src1_value < $src2_value) ? $is_bltu :
                          ($src1_value >= $src2_value) ? $is_bgeu : 11'b0;
+         $br_tgt_pc = $pc +$imm ;
 
-
-///////////////////////////////////////////////////////////////
-////////////////Lab: Register File Read/////////////
-///////////////////////////////////////////////////////////////
-https://myth2.makerchip.com/sandbox/04xfJhBGq/0j2hn9B#
-------------------------------------------------------
-// Lab: Register File Read
-         $rf_rd_data1[31:0] = (!$reset && $rf_rd_en1 && !$rf_wr_en && $rd_valid) ?
-                              0 : $rf_wr_data[31:0];
-         $rf_rd_data2[31:0] = (!$reset && $rf_rd_en2 && !$rf_wr_en && $rd_valid) ?
-                              0 : $rf_wr_data[31:0];
- // Part-2 Register File Read
-         $src1_value[31:0] = $rf_rd_data1[31:0] ;
-         $src2_value[31:0] = $rf_rd_data2[31:0] ;
-/////////////// LAB- REGISTER FILE READ //////////////////////////////////
+-----------------------------------------------------------------
+/////////////////////////////////////////////////////////////////////
+/////////////// LAB- TEST BENCH//////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-https://myth2.makerchip.com/sandbox/0rkfAh4pA/0qjh8lQ
+https://myth2.makerchip.com/sandbox/0ADf9h9Kr/0AnhNgp#
+-----------------------------------------------------------------
+   // Lab Testbench
+   
+   // Assert these to end simulation (before Makerchip cycle limit).
+   *passed = *cyc_cnt > 40;
+   *passed = |cpu/xreg[10]>>5$value == (1+2+3+4+5+6+7+8+9);
+   *failed = 1'b0;
+
+
+https://myth2.makerchip.com/sandbox/0ADf9h9Kr/0AnhNgp#
+------------------------------------------------------------
+/////////////// DAY-5//////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
 -------------------------------------------------------------------
