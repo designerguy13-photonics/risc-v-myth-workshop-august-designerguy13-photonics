@@ -229,6 +229,20 @@ https://myth2.makerchip.com/sandbox/04xfJhBGq/0k5hONJ#
                               
 ------------------------------------------------------------
 ///////////////////////////////////////////////////////////////
+////////////////Lab: Branch LAb/////////////////////
+///////////////////////////////////////////////////////////////
+https://myth2.makerchip.com/sandbox/04xfJhBGq/0oYhrMD#
+---------------------------------------------------------------
+ // Lab: Branches
+         $taken_branch = ($src1_value == $src2_value) ? $is_beq :
+                         ($src1_value != $src2_value) ? $is_bne :
+                         ($src1_value < $src2_value )^($src1_value[31] != $src2_value[31]) ? $is_blt :
+                         ($src1_value >= $src2_value)^($src1_value[31] != $src2_value[31])  ? $is_bge :
+                         ($src1_value < $src2_value) ? $is_bltu :
+                         ($src1_value >= $src2_value) ? $is_bgeu : 11'b0;
+
+
+///////////////////////////////////////////////////////////////
 ////////////////Lab: Register File Read/////////////
 ///////////////////////////////////////////////////////////////
 https://myth2.makerchip.com/sandbox/04xfJhBGq/0j2hn9B#
