@@ -613,25 +613,26 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
    m4_asm(ADDI, r13, r13, 1)            // Increment intermediate register by 1
    m4_asm(BLT, r13, r12, 1111111111000) // If a3 is less than a2, branch to label named <loop>
    m4_asm(ADD, r10, r14, r0)            // Store final result to register a0 so that it can be read by main program
-   //m4_asm(SW, r0, r10, 10000)
-   //m4_asm(LW, r17, r0, 10000)
+   m4_asm(SW, r0, r10, 10000)
+   m4_asm(LW, r17, r0, 10000)
    // Optional:
-   // m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
+   m4_asm(JAL, r7, 00000000000000000000) // Done. Jump to itself (infinite loop). (Up to 20-bit signed immediate plus implicit 0 bit (unlike JALR) provides byte address; last immediate bit should also be 0)
    m4_define_hier(['M4_IMEM'], M4_NUM_INSTRS)
-/////////////DAY-5///////FINAL-CODE/////////////
+   /////////////DAY-5///////FINAL-CODE/////////////
    |cpu
       @0
          $reset = *reset;
-         $inc_pc[31:0] = $pc[31:0] + 4;
+         //$pc[31:0] = 0;
          $pc[31:0] = >>1$reset ? 0 : >>3$valid_taken_br ?
-                    >>3$br_tgt_pc : >>3$valid_ld ? >>3$inc_pc[31:0] : 
+                    >>3$br_tgt_pc : >>3$valid_ld ? >>3$inc_pc[31:0]: 
                     >>3$valid_jump && >>3$is_jal ?
                     >>3$br_tgt_pc :
                     >>3$valid_jump && >>3$is_jalr ?
-                    >>3$jglr_tgt_pc :
+                    >>3$jalr_tgt_pc :
                     >>1$inc_pc[31:0]; 
       
       @1
+         $inc_pc[31:0] = $pc[31:0] + 32'd4;
          $imem_rd_addr[M4_IMEM_INDEX_CNT-1:0] = $pc[M4_IMEM_INDEX_CNT+1:2];
          
          $imem_rd_en = !$reset;
@@ -649,7 +650,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $is_u_instr = $instr[6:2] ==? 5'b0x101;
          $is_b_instr = $instr[6:2] ==? 5'b11000 ;
          $is_j_instr = $instr[6:2] ==? 5'b11011 ;
-         $is_r4_instr = $instr[6:2] ==? 5'b1000x  || $instr[6:2] ==? 5'b1001x;
+         //$is_r4_instr = $instr[6:2] ==? 5'b1000x  || $instr[6:2] ==? 5'b1001x;
          // Lab : Instruction Immidiate Decode
          $imm[31:0] = $is_i_instr ? 
                       { {21{$instr[31]}}, $instr[30:20]} :
@@ -660,8 +661,8 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
                       $is_u_instr ?
                       {  $instr[31:12] , {0{$instr[11:0]} }}:
                       $is_j_instr ?
-                      { {11{$instr[31]}}, $instr[19:12], {2{$instr[20]}}, $instr[30:21], 1'b0} :
-                      32'b0;
+                      { {11{$instr[31]}}, $instr[19:12], {2{$instr[20]}}, $instr[30:21], 1'b0} : 32'b0
+                      ;
          //  RISC-V INSTRUCTION FIELD DECODE  ///////////////////////////////////////           
          $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
          ?$rs2_valid
@@ -682,7 +683,6 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $opcode_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr || $is_s_instr || $is_b_instr;
          ?$opcode_valid*/
             $opcode[6:0] = $instr[6:0];
-
       @2
          // Lab: Instruction Decode  
          $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
@@ -691,7 +691,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $is_auipc = $dec_bits ==? 11'bx_xxx_0010111 ;
          $is_jal = $dec_bits ==? 11'bx_xxx_1101111 ;
          //////////////////////////////////////////////////////
-         $is_jalr = $dec_bits ==? 11'bx_000_0110011 ;
+         $is_jalr = $dec_bits ==? 11'bx_000_1100111 ;
          $is_beq = $dec_bits ==? 11'bx_000_1100011 ;
          $is_bne = $dec_bits ==? 11'bx_001_1100011 ;
          $is_blt = $dec_bits ==? 11'bx_100_1100011 ;
@@ -699,7 +699,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $is_bltu = $dec_bits ==? 11'bx_110_1100011 ;
          $is_bgeu = $dec_bits ==? 11'bx_111_1100011 ;
          ///////////////////////////////////////////////////
-         $is_load = $dec_bits ==? 11'bx_xxx_0000011 ;
+         //$is_load = $dec_bits ==? 11'bx_xxx_0000011 ;
          ///////////////////////////////////////////////////
          $is_sb = $dec_bits ==? 11'bx_000_0100011 ;
          $is_sh = $dec_bits ==? 11'bx_001_0100011 ;
@@ -734,20 +734,22 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $rf_rd_index2[4:0] = $rs2[4:0];
          $rf_rd_en1 = $rs1_valid;
          $rf_rd_en2 = $rs2_valid;
+         /////////////////////////////////////////
+         
          
          ////////////////////////////////////////////////////////
-         $src1_value[31:0] = (>>1$rf_wr_en && (>>1$rf_wr_index == >>1$rf_rd_index1)) ? $rf_rd_data1[31:0]  : >>1$result; 
-         $src2_value[31:0] = (>>1$rf_wr_en && (>>1$rf_wr_index == >>1$rf_rd_index2)) ? $rf_rd_data2[31:0] : >>1$result;
+         $src1_value[31:0] = >>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index1) ? >>1$result : $rf_rd_data1[31:0]; 
+         $src2_value[31:0] = >>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index2) ? >>1$result : $rf_rd_data2[31:0];
          ////////////////ADDITIONAL SIGNALS AND ARRAYS/////////////////////////////////////////
-         $temp_u_result = ($src1_value < $src2_value); //created for s-instruction
-         $temp_i_result = ($src1_value < $imm); //created for s-instruction
-         $br_tgt_pc[31:0] = $pc[31:0] + $imm[31:0];
-         $jglr_tgt_pc[3:0] = $src1_value +$imm;
+         $br_tgt_pc[31:0] = $pc + $imm;
+         $jalr_tgt_pc[31:0] = $src1_value +$imm;
+
       @3
          $valid_taken_br = $valid && $taken_br;
-         $valid_ld = $valid && $is_load;
-         $valid = !(>>1$valid_taken_br) || !(>>2$valid_taken_br) || 
-                  (>>1$valid_ld) || (>>2$valid_ld);
+         $valid_ld = $valid && $is_ld;
+         $valid = !(>>1$valid_taken_br || >>2$valid_taken_br || 
+                  >>1$valid_ld || >>2$valid_ld ||
+                  >>1$valid_jump || >>2$valid_jump);
          $is_jump = $is_jal || $is_jalr;
          $valid_jump = $is_jump && $valid;
          
@@ -756,7 +758,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          
          $temp_i_status = ($src1_value < $imm);
          ////////////////////////////////////////////////
-         $rf_wr_en = $rd_valid && (!$rd == 5'b0) && $valid; //DAY-5 
+         $rf_wr_en = ($rd_valid && $valid && $rd != 5'b0) || >>2$valid_ld; //DAY-5 
          $rf_wr_index[4:0] = >>2$valid_ld ? >>2$rd : $rd;
          $rf_wr_data[31:0] = >>2$valid_ld ? >>2$load_data[31:0] : $result;
          $taken_br = $is_beq ? ($src1_value == $src2_value):
@@ -812,7 +814,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          
        
        // Assert these to end simulation (before Makerchip cycle limit).
-   *passed = *cyc_cnt > 40;
+   *passed = *cyc_cnt > 100;
    *passed = |cpu/xreg[17]>>5$value == (0+1+2+3+4+5+6+7+8+9);
    *failed = 1'b0;
 
@@ -834,9 +836,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
        // @4 would work for all labs
 \SV
    endmodule
+
 -----------------------------------------------------------------------------------------------------
 
-
-
---------------------------------------------------
 
