@@ -60,5 +60,5 @@ Then we get to know the answers about following questions after performing the l
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-4.PNG?raw=true)
 
-![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-5.PNG?raw=true)
+
 
