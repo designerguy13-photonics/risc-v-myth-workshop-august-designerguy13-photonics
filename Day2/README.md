@@ -37,7 +37,8 @@ So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief 
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/starting%20address%20of%20main%20program%20debug%20without%20any%20add%20on%20instructions.PNG?raw=true)
 
+ I tried the sum1ton.c code using three ways: clearly shown in following figure and found same number of assembly code lines for main block in case of both O1 and Ofast options.
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/snipped_day-1.PNG?raw=true)
-
-![alt text](?raw=true)
+But then later I figured out this :
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/Snippet-2-Day-1.PNG?raw=true)
 
