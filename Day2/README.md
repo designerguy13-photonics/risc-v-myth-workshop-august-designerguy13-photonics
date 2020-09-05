@@ -11,6 +11,8 @@ This repository contains all the important takeaways that must be useful while b
 It started with an introductory session by @kunalghosh and @Stevehoover and then 3 hours after that we were on an online platform VSD – IAT – VLSI System Design !!
 So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief about overall system software and hardware approach
 
+## Install the VSD-FLOW to your machine https://github.com/kunalg123/vsdflow
+
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/system-software.png?raw=true)
 
 ### It was now time to learns some C-coding to get familiar with and then write the sum1to9.c code that basically adds decimal number 1 to 9
