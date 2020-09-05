@@ -39,3 +39,26 @@ So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief 
 But then later I figured out this :
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/Snippet-2-Day-1.PNG?raw=true)
 
+# DAY-2
+It started with learning about ABI )Application Binary Interface) which is a actually a sort of hand-shake between the application program and operating system kernel via standard libraries.
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/ABI.png?raw=true)
+It is actually a system of call-interface !!
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/ABI2.png?raw=true)
+Then we get to know the answers about following questions after performing the lab-exercise :
+  - Why Risc-v has 32-bit registers only?
+  - How ABI access the register
+ 
+ The answer to first one is it belongs to little-endian memory addressing type
+ and for latter follows the following snippets from lab
+![alt text](?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-1.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-2.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-3.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-4.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-5.PNG?raw=true)
+
