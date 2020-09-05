@@ -13,3 +13,31 @@ So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief 
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/system-software.png?raw=true)
 
+### It was now time to learns some C-coding to get familiar with and then write the sum1to9.c code that basically adds decimal number 1 to 9
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/sum1ton%20code.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_add_objectfile%20for%20output.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_add_objectfile%20for%20output_with%20Ofast%20option.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_final%20command%20to%20debug%20the%20c%20code%20toriscv%20assembly%20_add%20this%20to%20search%20for%20specific%20assembly%20lines.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_final%20command%20to%20debug%20the%20c%20code%20toriscv%20assembly.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_final%20command%20to%20run%20your%20c%20code%20with%20riscv%20arch.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_mabi.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1_march.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/scroll%20down%20and%20type%20in%20here.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/starting%20address%20of%20main%20program%20debug%20without%20any%20add%20on%20instructions.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/snipped_day-1.PNG?raw=true)
+
+![alt text](?raw=true)
+
