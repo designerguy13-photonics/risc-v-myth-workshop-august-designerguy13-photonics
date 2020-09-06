@@ -62,3 +62,7 @@ Then we get to know the answers about following questions after performing the l
 
 ### Know we are all set to link this code with makerchip platform 
 
+# Day-5
+We finally deeloped complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/final.png?raw=true)
