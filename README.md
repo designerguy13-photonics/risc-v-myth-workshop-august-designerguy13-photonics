@@ -1,6 +1,11 @@
 # RISC-V_MYTH_Workshop
-This project repository  RISC-V MYTH ( Microprocessor for You in Thirty Hours) workshop contains all the important takeaways that must be useful while building your own RISC-V Architecture using opensource platform conducted by VSDFLOW and REDWOOD-EDA
-This workshop was conducted over a period of 5 days and in this short span of time we were able to understand & implement a RISC-V core with base instruction set. Programming language used in the software section was C, assembly (pseudo codes) were also utilised, along with TL-Verilog for HDL implementation. Tools used: Spike and Makerchip IDE.
+# RISC-V_MYTH_Workshop
+What an amazing project experience with RISC-V MYTH (Microprocessor for You in Thirty Hours) workshop conducted by VSDFLOW and REDWOOD-EDA
+It is now time to pen down some important takeaways while you try to build your own RISC-V architecture.
+Well let me tell you very frankly that I never understood any microprocessor architecture this way, the way I understand it now. All thanks to that hands-on experience using 
+## VSD-Flow-spike tool and Makerchip open-source platforms
+Couldn’t imagine that its possible to understand and then implement a complete RISC-V core with basic instruction set in just 5 days.
+ And that too using  C, assembly (pseudo codes)  and this emerging TL-Verilog for HDL implementation. 
 
 # Table of Contents
 - [What is RISC V?](#What-is-RISC-V?)
