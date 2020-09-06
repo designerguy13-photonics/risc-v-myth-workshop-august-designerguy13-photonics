@@ -7,7 +7,7 @@ This workshop was conducted over a period of 5 days and in this short span of ti
 - [Day 1.](#Day-1)
 - [Day 2.](#Day-2)
 - [Day 3.](#Day-3)
-- [Day 4 & Day 5.](#Day 4-5) 
+- [Day 4-5.](#Day 4-5) 
 - [Acknowledgements.](#Acknowledgements)
 
 # What is RISC V?
