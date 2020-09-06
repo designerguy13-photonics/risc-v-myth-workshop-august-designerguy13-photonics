@@ -577,7 +577,7 @@ D5SK3
 //////////////////////////////////////////////
 /////////////DAY-5///////FINAL-CODE/////////////
 //////////////////////////////////////////////
-https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
+https://myth2.makerchip.com/sandbox/0wpfLh9Dz/0DRh57y#
 ------------------------------------------------------------------------
 \m4_TLV_version 1d: tl-x.org
 \SV
@@ -623,13 +623,13 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
       @0
          $reset = *reset;
          //$pc[31:0] = 0;
-         $pc[31:0] = >>1$reset ? 0 : >>3$valid_taken_br ?
+         $pc[31:0] = >>1$reset ? '0 : >>3$valid_taken_br ?
                     >>3$br_tgt_pc : >>3$valid_ld ? >>3$inc_pc[31:0]: 
                     >>3$valid_jump && >>3$is_jal ?
                     >>3$br_tgt_pc :
                     >>3$valid_jump && >>3$is_jalr ?
                     >>3$jalr_tgt_pc :
-                    >>1$inc_pc[31:0]; 
+                    >>1$inc_pc[31:0];
       
       @1
          $inc_pc[31:0] = $pc[31:0] + 32'd4;
@@ -646,10 +646,11 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $is_s_instr = $instr[6:2] ==? 5'b0100x ;
          $is_r_instr = $instr[6:2] ==? 5'b01011 ||
                        $instr[6:2] ==? 5'b011x0 ||
-                       $instr[6:2] ==? 5'b01011 ;
+                       $instr[6:2] ==? 5'b10100 ;
          $is_u_instr = $instr[6:2] ==? 5'b0x101;
          $is_b_instr = $instr[6:2] ==? 5'b11000 ;
          $is_j_instr = $instr[6:2] ==? 5'b11011 ;
+         $opcode[6:0] = $instr[6:0];
          //$is_r4_instr = $instr[6:2] ==? 5'b1000x  || $instr[6:2] ==? 5'b1001x;
          // Lab : Instruction Immidiate Decode
          $imm[31:0] = $is_i_instr ? 
@@ -657,11 +658,11 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
                       $is_s_instr ?
                       { {21{$instr[31]}}, $instr[30:25], $instr[11:7]} :
                       $is_b_instr ?
-                      { {19{$instr[31]}},{2{$instr[7]}}, $instr[30:25], $instr[11:8],1'b0} :
+                      { {20{$instr[31]}},$instr[7], $instr[30:25], $instr[11:8],1'b0} :
                       $is_u_instr ?
-                      {  $instr[31:12] , {0{$instr[11:0]} }}:
+                      {  $instr[31:12] , 12'b0}:
                       $is_j_instr ?
-                      { {11{$instr[31]}}, $instr[19:12], {2{$instr[20]}}, $instr[30:21], 1'b0} : 32'b0
+                      { {12{$instr[31]}}, $instr[19:12], $instr[20], $instr[30:21], 1'b0} : 32'b0
                       ;
          //  RISC-V INSTRUCTION FIELD DECODE  ///////////////////////////////////////           
          $rs2_valid = $is_r_instr || $is_s_instr || $is_b_instr;
@@ -670,7 +671,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $rs1_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
          ?$rs1_valid
             $rs1[4:0] = $instr[19:15];
-         $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr ;
+         $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr ;
          ?$funct3_valid
             $funct3[2:0] = $instr[14:12];
          $funct7_valid = $is_r_instr || $is_b_instr;
@@ -680,10 +681,20 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          ?$rd_valid
             $rd[4:0] = $instr[11:7];
          
-         $opcode_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr || $is_s_instr || $is_b_instr;
-         ?$opcode_valid*/
-            $opcode[6:0] = $instr[6:0];
+         
       @2
+         //////////////////////////////////////////////////
+          // Lab: Register File Read
+         $rf_rd_index1[4:0] = $rs1[4:0];
+         $rf_rd_en1 = $rs1_valid;
+         $rf_rd_index2[4:0] = $rs2[4:0];
+         $rf_rd_en2 = $rs2_valid;
+         /////////////////////////////////////////
+         ////////////////////////////////////////////////////////
+         $src1_value[31:0] = (>>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index1))
+                             ? >>1$result : $rf_rd_data1[31:0]; 
+         $src2_value[31:0] = (>>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index2))
+                             ? >>1$result : $rf_rd_data2[31:0];
          // Lab: Instruction Decode  
          $dec_bits[10:0] = {$funct7[5],$funct3,$opcode};
          $is_ld = $dec_bits ==? 7'b0000011;
@@ -726,20 +737,8 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $is_or = $dec_bits ==? 11'b0_011_0110011 ;
          $is_and = $dec_bits ==? 11'b0_111_0110011 ;
          `BOGUS_USE($is_lui $is_auipc $is_jal $is_jalr $is_beq $is_bne $is_blt $is_bge $is_bltu $is_bgeu $is_load $is_sb $is_sh $is_sw $is_addi $is_add $is_slti $is_sltu $is_xori $is_ori $is_andi $is_slli $is_srli $is_srai $is_add $is_sub $is_sll $is_slt $is_sltu $is_xor $is_srl $is_sra $is_or $is_and) 
-         //////////////////////////////////////////////////
-          // Lab: Register File Read
          
          
-         $rf_rd_index1[4:0] = $rs1[4:0];
-         $rf_rd_index2[4:0] = $rs2[4:0];
-         $rf_rd_en1 = $rs1_valid;
-         $rf_rd_en2 = $rs2_valid;
-         /////////////////////////////////////////
-         
-         
-         ////////////////////////////////////////////////////////
-         $src1_value[31:0] = >>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index1) ? >>1$result : $rf_rd_data1[31:0]; 
-         $src2_value[31:0] = >>1$rf_wr_en && (>>1$rf_wr_index == $rf_rd_index2) ? >>1$result : $rf_rd_data2[31:0];
          ////////////////ADDITIONAL SIGNALS AND ARRAYS/////////////////////////////////////////
          $br_tgt_pc[31:0] = $pc + $imm;
          $jalr_tgt_pc[31:0] = $src1_value +$imm;
@@ -748,8 +747,8 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $valid_taken_br = $valid && $taken_br;
          $valid_ld = $valid && $is_ld;
          $valid = !(>>1$valid_taken_br || >>2$valid_taken_br || 
-                  >>1$valid_ld || >>2$valid_ld ||
-                  >>1$valid_jump || >>2$valid_jump);
+                  >>1$valid_ld || >>2$valid_ld || >>1$valid_jump || >>2$valid_jump);
+         
          $is_jump = $is_jal || $is_jalr;
          $valid_jump = $is_jump && $valid;
          
@@ -768,41 +767,37 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
                          $is_bltu ? ($src1_value < $src2_value):
                          $is_bgeu ? ($src1_value >= $src2_value):
                                     1'b0;
-         $result[31:0] =
-             $is_addi  ? $src1_value + $imm[31:0] :
-             $is_add   ? $src1_value + $src2_value :
-             $is_beq ? ($src1_value == $src2_value)   :
-             $is_bne ? ($src1_value != $src2_value)   :
-             $is_blt ? ($src1_value < $src2_value) ^($src1_value[31] != $src2_value[31])   :
-             $is_bge ? ($src1_value >= $src2_value)^($src1_value[31] != $src2_value[31])   :
-             $is_bltu ? ($src1_value < $src2_value)   :
-             $is_bgeu ? ($src1_value > $src2_value)   :
-             $is_andi ? ($src1_value & $imm)   :
-             $is_xori ? ($src1_value ^ $imm)   :
-             $is_ori ? ($src1_value | $imm)  :
-             $is_addi ? ($src1_value + $imm)   :
-             $is_slli ? ($src1_value + $imm[5:0])   :
-             $is_srli ? ($src1_value + $imm[5:0])   :
-             $is_and ? ($src1_value & $src2_value)   :
-             $is_or ? ($src1_value | $src2_value)   :
-             $is_xor ? ($src1_value ^ $src2_value)  :
-             $is_add ? ($src1_value + $src2_value)   :
-             $is_sub ? ($src1_value - $src2_value)   :
-             $is_sll ? ($src1_value << $src2_value[4:0])   :
-             $is_srl ? ($src1_value >> $src2_value[4:0])   :
-             $is_sltu ? $temp_u_status  :
-             $is_sltiu ? $temp_i_status   :
-             $is_lui ? {$imm[31:12],12'b0}  :
-             $is_auipc ? ($pc +$imm)  :
-             $is_jal ? ($pc + 4 ) :
-             $is_jalr ? ($pc + 4)  :
-             $is_srai ? {{32{$src1_value[31]}},$src1_value} >> $imm[4:0] :
-             $is_slt ? ($src1_value[31] == $src2_value[31]) ? $temp_u_status : 
-             {31'b0, $src1_value[31]} :
-             $is_slti ? ($src1_value[31] == $imm[31]) ? $temp_i_status : {31'b0, $src1_value[31]} :
-              
-             //$is_sra ? {{32{$src1_value[31]}, $src1_value} >> $src2_value[4:0] : 
-             32'bx;
+         $result[31:0] =  $is_andi ? ($src1_value & $imm)   :
+                          $is_ori ? ($src1_value | $imm)  :
+                          $is_xori ? ($src1_value ^ $imm)   :
+                          ($is_addi || $is_ld &&$is_s_instr) ? ($src1_value + $imm)   :
+                          $is_slli ? ($src1_value + $imm[5:0])   :
+                          $is_srli ? ($src1_value + $imm[5:0])   :
+                          $is_and ? ($src1_value & $src2_value)   :
+                          $is_or ? ($src1_value | $src2_value)   :
+                          $is_xor ? ($src1_value ^ $src2_value)  :
+                          $is_add ? ($src1_value + $src2_value)   :
+                          $is_sub ? ($src1_value - $src2_value)   :
+                          $is_sll ? ($src1_value << $src2_value[4:0])   :
+                          $is_srl ? ($src1_value >> $src2_value[4:0])   :
+                          $is_sltu ? $temp_u_status  :
+                          $is_beq ? ($src1_value == $src2_value)   :
+                          $is_bne ? ($src1_value != $src2_value)   :
+                          $is_blt ? ($src1_value < $src2_value) ^($src1_value[31] != $src2_value[31])   :
+                          $is_bge ? ($src1_value >= $src2_value)^($src1_value[31] != $src2_value[31])   :
+                          $is_bltu ? ($src1_value < $src2_value)   :
+                          $is_andi ? ($src1_value & $imm)   : 
+                          $is_sltiu ? $temp_i_status   :
+                          $is_lui ? {$imm[31:12],12'b0}  :
+                          $is_auipc ? ($pc +$imm)  :
+                          $is_jal ? ($pc + 4 ) :
+                          $is_jalr ? ($pc + $imm)  :
+                          $is_srai ? {{32{$src1_value[31]}},$src1_value} >> $imm[4:0] :
+                          $is_slt ? ($src1_value[31] == $src2_value[31]) ? $temp_u_status : 
+                                    {31'b0, $src1_value[31]} :
+                          $is_slti ? ($src1_value[31] == $imm[31]) ? $temp_i_status : {31'b0, $src1_value[31]} :
+                          $is_sra ? {{32{$src1_value[31]}}, $src1_value} >> $src2_value[4:0] : 
+                          32'bx;
          
       @4
          
@@ -810,12 +805,13 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
          $dmem_wr_en = $is_ld;
          $dmem_addr[3:0] = $result[5:2];
          $dmem_wr_data[31:0] = $src2_value;
+      @5
          $load_data[31:0] = $dmem_rd_data[31:0];
          
        
        // Assert these to end simulation (before Makerchip cycle limit).
    *passed = *cyc_cnt > 100;
-   *passed = |cpu/xreg[17]>>5$value == (0+1+2+3+4+5+6+7+8+9);
+   *passed = |cpu/xreg[14]>>5$value == (0+1+2+3+4+5+6+7+8+9);
    *failed = 1'b0;
 
    
@@ -836,6 +832,7 @@ https://myth2.makerchip.com/sandbox/0v2fWhzmz/0nZh7V8#
        // @4 would work for all labs
 \SV
    endmodule
+
 
 -----------------------------------------------------------------------------------------------------
 
