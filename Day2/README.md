@@ -1,8 +1,27 @@
 # RISC-V_MYTH_Workshop
-This repository contains all the important takeaways that must be useful while building your own RISC-V Architecture using opensource platform by VSDFLOW and REDWOOD-EDA
+This project repository  RISC-V MYTH ( Microprocessor for You in Thirty Hours) workshop contains all the important takeaways that must be useful while building your own RISC-V Architecture using opensource platform conducted by VSDFLOW and REDWOOD-EDA
+This workshop was conducted over a period of 5 days and in this short span of time we were able to understand & implement a RISC-V core with base instruction set. Programming language used in the software section was C, assembly (pseudo codes) were also utilised, along with TL-Verilog for HDL implementation. Tools used: Spike and Makerchip IDE.
 
-  
-# DAY-1 
+# Table of Contents
+- [What is RISC V?](#What-is-RISC-V?)
+- [Day 1.](#Day-1)
+- [Day 2.](#Day-2)
+- [Day 3.](#Day-3)
+- [Day 4 & Day 5.](#Day 4 & Day 5) 
+- [Acknowledgements.](#Acknowledgements)
+
+# What is RISC V?
+  - A high-quality, license-free, royalty-free RISC ISA (Instruction set architecture)
+  - Standard maintained by the non-profit RISC-V Foundation
+  - Suitable for all types of computing systems
+    – From Microcontrollers to Supercomputers
+  - RISC-V is available freely under a permissive license
+  - RISC-V is not a A company or a CPU implementation
+  - Unlike other existing commercial ISAs, the RISC-V ISA is open and this makes it easy and flexible for anyone to build a       processor that supports it. 
+  - This quick workshop helped me gain the overview of the software, the hardware aspect and hands on lab sessions were done     to learn debugging the architecture by your own. [it wasn't a mugging up thing at all]
+
+
+# Day 1
 It started with an introductory session by @kunalghosh and @Stevehoover and then 3 hours after that we were on an online platform VSD – IAT – VLSI System Design !!
 So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief about overall system software and hardware approach
 
@@ -39,7 +58,7 @@ So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief 
 But then later I figured out this :
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/Snippet-2-Day-1.PNG?raw=true)
 
-# DAY-2
+# Day 2
 It started with learning about ABI )Application Binary Interface) which is a actually a sort of hand-shake between the application program and operating system kernel via standard libraries.
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/ABI.png?raw=true)
 It is actually a system of call-interface !!
@@ -60,8 +79,20 @@ Then we get to know the answers about following questions after performing the l
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-4.PNG?raw=true)
 
-### Know we are all set to link this code with makerchip platform 
-# Day-3 
+### Know we are all set to link this code with makerchip platform using TL verolog
+
+But what is 
+# Day 3 
+answered this amazingly !!
+## TL- Verilog
+TL-Verilog is an extension for System Verilog, moreover it acts as an higher level abstraction for System verilog which makes HDL implementation very easy and error free. Here we deal the design at a transaction level assuming the design as a pipeline, where inputs would be provided and output will be generated at the end of the pipeline. 
+  
+  **PROS** : 
+   - Code reduction , and thus less chances of being bug prone.
+   - In pipelining ,the flip flops,registers and other staged signals are implied from the context. 
+   - It is very easy to stage different sections without impacting the behaviour of the logic.
+   - Validity feature which provides easier debugging, cleaner design, automated clock gating and better error checking       capabilities.
+
 Some basic implications to go further !!
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/absic%20implications%20about%20logic%20gate.PNG?raw=true)
 
@@ -82,7 +113,23 @@ Now we went on to design our calculator logic to understand the ALU functionalit
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/LOAD_PYTHAGOREAN_EXAMPLE_SNAPSHOT_MAKERCHIP.PNG?raw=true)
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/seuential%20calc%20full%20snippet.PNG?raw=true)
-# Day-4&5
-We finally deeloped complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
+# Day 4 & Day 5
+We finally developed complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
+ Finally, the above architecture is pipelined as follows :
+   - A 3 cycle RISC V pipelined core, with all the base integer instruction sets was developed. 
+   - For Load and store a Data memory element was added with neccessary instruction decoding logic.
+   - Register Bypass and Squashing techniques were also incorporated to prevent `Read followed by write`
+     and `branching`hazards, arised due to pipelining.
+   - Testing of the pipeline design was done in same manner with Load and store incorporated in asm code.
+   - Additionally Incorporation of Jump feature (JAL and JALR instructions) was also done.The code can be found [here](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/risc-v_solutions.tlv).
 
-![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/final.png?raw=true)
+**Final RISC V CPU Core**
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-        photonics/blob/master/Day3_5/FINAL-RISC-V-1.png?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/commit/f2bfa089bd9791742853729af3805cb4426d0fda?raw=true)
+
+# Acknowledgements
+- [Kunal Ghosh](https://github.com/kunalg123), Co-founder (VSD Corp. Pvt. Ltd)
+- [Steve Hoover](https://github.com/stevehoover), Founder, Redwood EDA.
+- [Shivam Potdar](https://github.com/shivampotdar), GSoC 2020 Student,FOSSi Foundation.
+- [Vineet Jain](https://github.com/vineetjain07), GSoC 2020 Student, FOSSi Foundation.
