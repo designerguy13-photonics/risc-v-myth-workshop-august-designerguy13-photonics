@@ -7,7 +7,7 @@ This workshop was conducted over a period of 5 days and in this short span of ti
 - [Day 1.](#Day-1)
 - [Day 2.](#Day-2)
 - [Day 3.](#Day-3)
-- [Day 4-5.](#Day 4-5) 
+- [Day 4-5.](#Day-4-5) 
 - [Acknowledgements.](#Acknowledgements)
 
 # What is RISC V?
@@ -114,7 +114,17 @@ Now we went on to design our calculator logic to understand the ALU functionalit
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/seuential%20calc%20full%20snippet.PNG?raw=true)
 # Day 4-5
-We finally developed complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
+Having sleepless nights on Day-3 and Day-4 to understand the TL-verilog flow and basic calculator logics, the plan to implemented  the following blocks become much more easy:
+  
+  - Program Counter (PC)
+  - Imem-Rd ( Instruction Memory)
+  - Instruction Decoder
+  - Register File Read
+  - Arithmatic Logic Unit (ALU)
+  - Register File Write
+  - Branch
+  
+Thus the instruction set architecture of base integer instructions, The register file, branching,etc. and eventually the CPU core was built and tested(using appropriate testbench logic, and assembly code developed on Day 2) at the end of the day ,in similar progressive fashion like the previous day.
  Finally, the above architecture is pipelined as follows :
    - A 3 cycle RISC V pipelined core, with all the base integer instruction sets was developed. 
    - For Load and store a Data memory element was added with neccessary instruction decoding logic.
