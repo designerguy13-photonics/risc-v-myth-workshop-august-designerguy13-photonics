@@ -61,7 +61,27 @@ Then we get to know the answers about following questions after performing the l
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-4.PNG?raw=true)
 
 ### Know we are all set to link this code with makerchip platform 
+# Day-3 
+Some basic implications to go further !!
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/absic%20implications%20about%20logic%20gate.PNG?raw=true)
 
+Now we went on to design our calculator logic to understand the ALU functionality using both combinational and seuential logic design
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/SIMPLE%20COMBINATIONAL%20LOGIC%20USING%20TL-X%20VERILOG.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/FREE%20RUNNING%20COUNTER.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/Lab%20_Counter%20and%20Calculator%20in%20Pipeline.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/LAB%20PIPELINE.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/lAB%20VECTORS.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/LAB-2-CYCLE-CALCULATOR-Slide_number-36.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/LOAD_PYTHAGOREAN_EXAMPLE_SNAPSHOT_MAKERCHIP.PNG?raw=true)
+
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/seuential%20calc%20full%20snippet.PNG?raw=true)
 # Day-5
 We finally deeloped complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
 
