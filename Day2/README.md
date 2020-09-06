@@ -7,7 +7,7 @@ This workshop was conducted over a period of 5 days and in this short span of ti
 - [Day 1.](#Day-1)
 - [Day 2.](#Day-2)
 - [Day 3.](#Day-3)
-- [Day 4 & Day 5.](#Day 4 & Day 5) 
+- [Day 4 & Day 5.](#Day 4-5) 
 - [Acknowledgements.](#Acknowledgements)
 
 # What is RISC V?
@@ -113,7 +113,7 @@ Now we went on to design our calculator logic to understand the ALU functionalit
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/LOAD_PYTHAGOREAN_EXAMPLE_SNAPSHOT_MAKERCHIP.PNG?raw=true)
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/seuential%20calc%20full%20snippet.PNG?raw=true)
-# Day 4 & Day 5
+# Day 4-5
 We finally developed complete RISC-V architecture using Makerchip to generate the sum of numbers 1 to 9 in one of the register
  Finally, the above architecture is pipelined as follows :
    - A 3 cycle RISC V pipelined core, with all the base integer instruction sets was developed. 
@@ -123,10 +123,11 @@ We finally developed complete RISC-V architecture using Makerchip to generate th
    - Testing of the pipeline design was done in same manner with Load and store incorporated in asm code.
    - Additionally Incorporation of Jump feature (JAL and JALR instructions) was also done.The code can be found [here](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/risc-v_solutions.tlv).
 
-**Final RISC V CPU Core**
-![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-        photonics/blob/master/Day3_5/FINAL-RISC-V-1.png?raw=true)
+**Final RISC V CPU Core-I**
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/FINAL-RISC-V-1.png?raw=true)
 
-![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/commit/f2bfa089bd9791742853729af3805cb4426d0fda?raw=true)
+**Final RISC V CPU Core-II**
+![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day3_5/FINAL-RISC-V-IMAGE-2.png?raw=true)
 
 # Acknowledgements
 - [Kunal Ghosh](https://github.com/kunalg123), Co-founder (VSD Corp. Pvt. Ltd)
