@@ -40,7 +40,7 @@ So for the day-1 we were introduced to RISC-V ISA and GNU Compiler with a brief 
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/risc-v-commands_1.PNG?raw=true)
 
-### I tried the sum1ton.c code using three ways: clearly shown in following figure and found same number of assembly code lines for main block in case of both O1 and Ofast options.
+### I tried the sum1ton.c code using three ways: clearly shown in following figure and found same number of assembly code lines for main block in case of both -O1 and -Ofast risc-v debug options.
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/snipped_day-1.PNG?raw=true)
 But then later I figured out this :
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/Snippet-2-Day-1.PNG?raw=true)
@@ -66,7 +66,7 @@ Then we get to know the answers about following questions after performing the l
 
 ![alt text](https://github.com/RISCV-MYTH-WORKSHOP/risc-v-myth-workshop-august-designerguy13-photonics/blob/master/Day2/DAY-2-LAB-4.PNG?raw=true)
 
-### Know we are all set to link this code with makerchip platform using TL verolog
+### Now we are all set to link this code with makerchip platform using TL verolog
 
 But what is 
 # Day 3 
